@@ -1,14 +1,21 @@
 namespace OpenClose
 {
-    public class EmployeePartTime
+    public class EmployeePartTime : Employee
     {
-        public string Fullname { get; set; }
-        public int HoursWorked { get; set; }
-
         public EmployeePartTime(string fullname, int hoursWorked)
+        : base(fullname, hoursWorked) { }
+
+        public override decimal CalculateSalaryMonthly()
         {
-            Fullname = fullname;
-            HoursWorked = hoursWorked;
-        }        
+            const decimal hourValue = 20000M;
+            decimal salary = hourValue * HoursWorked;
+            if (HoursWorked > 160)
+            {
+                const decimal effortCompensation = 5000M;
+                int extraDays = HoursWorked - 160;
+                salary += effortCompensation * extraDays;
+            }
+            return salary;
+        }
     }
 }
